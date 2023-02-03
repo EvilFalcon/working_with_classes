@@ -7,6 +7,7 @@ namespace working_with_classes
         static void Main()
         {
             Hero hero = new Hero("Паладин",100,40,40,20,10);
+
             hero.ShowInfo();
         }
     }
