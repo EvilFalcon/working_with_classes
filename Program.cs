@@ -13,9 +13,6 @@ namespace working_with_classes
 
     class Hero
     {
-
-
-
         private string _grade;
         private float _health;
         private float _magicPoints;
