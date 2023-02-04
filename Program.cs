@@ -6,45 +6,37 @@ namespace working_with_classes
     {
         static void Main()
         {
-            Hero hero = new Hero("Паладин",100,40,40,20,10);
+            Hero hero = new Hero('♂');
+            Renderer renderer = new Renderer();
+
             hero.ShowInfo();
-            Console.ReadKey();
-            Renderer.DrawImage(hero.PositionY, hero.PositionX,hero.Symbol);
+            renderer.Draw(hero);
         }
     }
 
     class Hero
     {
-        private char _symbol = '@';
         private string _grade;
         private float _health;
         private float _magicPoints;
         private int _armor;
         private int _damage;
         private int _magicDamage;
-        private int _positionX=50;
-        private int _positionY=0;
+        private int _positionX = 9;
+        private int _positionY = 9;
 
-        public Hero(string grade,float health, float magicPoints, int armor, int damage, int magicDamage)
+        public Hero(char symbol)
         {
-            _grade = grade;
-            _health = health;
-            _magicPoints = magicPoints;
-            _armor = armor;
-            _damage = damage;
-            _magicDamage = magicDamage;
+            _grade = "Паладин";
+            _health = 100;
+            _magicPoints = 40;
+            _armor = 40;
+            _damage = 20;
+            _magicDamage = 10;
+            Symbol = symbol;
         }
 
-        public char Symbol
-        {
-            get
-            {
-                return _symbol;
-            }
-            private set 
-            {
-            }
-        }
+        public char Symbol { get; private set; }
 
         public int PositionX
         {
@@ -52,9 +44,9 @@ namespace working_with_classes
             {
                 return _positionX;
             }
-            set
+            private set
             {
-                if (PositionX > 0 && PositionX < 10)
+                if (IsRangeExist(PositionX))
                 {
                     _positionX = PositionX;
                 }
@@ -67,19 +59,34 @@ namespace working_with_classes
             {
                 return _positionY;
             }
-            set
+            private set
             {
-                if (PositionY < 0 && PositionY > 10) 
+                if (IsRangeExist(PositionY))
                 {
                     _positionY = PositionY;
                 }
             }
         }
 
+        private bool IsRangeExist(int position)
+        {
+            int positionMapMin = 0;
+            int positionMapMax = 10;
+
+            if (position >= positionMapMin && position <= positionMapMax)
+            {
+                return true;
+            }
+
+            return false;
+        }
 
         public void ShowInfo()
         {
-            Console.SetCursorPosition(10, 0);
+            int positionShowInfoX = 0;
+            int positionShowInfoY = 10;
+
+            Console.SetCursorPosition(positionShowInfoX, positionShowInfoY);
             Console.WriteLine($"Класс вашего героя :{_grade}" +
                               $"\nЗдоровье героя :{_health}" +
                               $"\nОчки магии героя :{_magicPoints}" +
@@ -89,13 +96,20 @@ namespace working_with_classes
         }
     }
 
-    class Renderer
+
+class Renderer
     {
 
-        public static void DrawImage(int positionX, int positionY,char symbol)
+        public  void Draw(int positionX, int positionY, char symbol)
         {
-            Console.SetCursorPosition(positionY,positionX);
+            Console.SetCursorPosition(positionX, positionY);
             Console.WriteLine(symbol);
         }
-    }
+
+        public void Draw(Hero hero)
+        {
+            Console.SetCursorPosition(hero.PositionX, hero.PositionY);
+            Console.WriteLine(hero.Symbol);
+        }
+    }  
 }
